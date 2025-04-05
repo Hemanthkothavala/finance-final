@@ -273,6 +273,11 @@ app.post("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/login"));
 });
 
+app.get("/", (req, res) => {
+  res.redirect("/login");
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
