@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.192);
+            border-radius: 8px;
+            box-shadow: 10px 10px 20px black;
+            backdrop-filter: blur(4px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.19);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background-color: #218838;
+            font-size: 20px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .body {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.319), rgba(0, 0, 0, 0.358)), url("./images/1.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        input {
+            background-color: rgba(255, 255, 255, 0.226);
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div class="container">
+        <h1 style="color: white;">Register</h1>
+        <form id="registration-form" method="POST" action="/registersubmit">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="annual-income">Annual Income</label>
+                <input type="number" id="annual-income" name="annualIncome" required>
+            </div>
+            <div class="form-group">
+                <label for="marital-status">Marital Status</label>
+                <select id="marital-status" name="maritalStatus" required style="color: white;">
+                    <option value="single" style="color: black;">Single</option>
+                    <option value="married" style="color: black;">Married</option>
+                </select>
+            </div>
+            <div class="form-group" id="children-group" style="display: none;">
+                <label for="num-children">Number of Children</label>
+                <input type="number" id="num-children" name="numChildren">
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p style="color: white;">Already have an account? <a href="login" style="color: yellow;">Login here</a>.<br></p>
+        <% if(typeof errorMessage !=="undefined" ) {%>
+            <p style="color: red;">
+                <%= errorMessage %>
+            </p>
+            <%}%>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const maritalStatusSelect = document.getElementById('marital-status');
+            const childrenGroup = document.getElementById('children-group');
+
+            maritalStatusSelect.addEventListener('change', () => {
+                if (maritalStatusSelect.value === 'married') {
+                    childrenGroup.style.display = 'block';
+                } else {
+                    childrenGroup.style.display = 'none';
+                }
+            });
+        });
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                window.location.replace('/registration');
+            }
+        });
+    </script>
+</body>
+
+</html>

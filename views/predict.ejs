@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #77d4d2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            width: 90%;
+            max-width: 1400px;
+        }
+
+        #predictionSection {
+            flex: 0.5;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        #predictionResult {
+            background: #ffffff8c;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            color: #34495e;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            background-color: #38ba21;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            flex: 1;
+            margin-left: 100px;
+        }
+
+        .chart-box {
+            background: #ffffff88;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="predictionSection">
+            <h2>Predicted Monthly Values for Next Month</h2>
+            <div id="predictionResult">Click the button to get predictions.</div>
+            <button id="predictButton">Predict Next Month Expenses</button>
+        </div>
+        <div class="charts-container">
+
+            <div class="chart-box">
+                <canvas id="myPieChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="myBarChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="myLineChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="myRadarChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let myPieChart, myBarChart, myLineChart, myRadarChart;
+
+        document.getElementById('predictButton').addEventListener('click', function () {
+            document.getElementById('predictionResult').innerText = 'Predicting, please wait...';
+
+            fetch('/predictValues', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('predictionResult').innerText = `Error: ${data.error}`;
+                    } else {
+                        const fields = [
+                            { key: 'em', label: 'Emergency Fund' },
+                            { key: 'im', label: 'Investments' },
+                            { key: 'edum', label: 'Education Funding' },
+                            { key: 'emim', label: 'EMI' },
+                            { key: 'loanm', label: 'Loans' },
+                            { key: 'savem', label: 'Savings' },
+                            { key: 'inm', label: 'Insurance' },
+                            { key: 'othm', label: 'Others' },
+                            { key: 'ltgm', label: 'Long-Term Goals' },
+                            { key: 'stgm', label: 'Short-Term Goals' },
+                            { key: 'taxm', label: 'Tax' }
+                        ];
+
+                        let resultText = '<h3>Predicted Values:</h3><ul>';
+                        const chartData = [];
+                        const chartLabels = [];
+
+                        fields.forEach(field => {
+                            const value = data.predictedValues[field.key].toFixed(2);
+                            resultText += `<li>${field.label}: ₹${value}</li>`;
+                            chartData.push(parseFloat(value));
+                            chartLabels.push(field.label);
+                        });
+
+                        resultText += '</ul>';
+                        document.getElementById('predictionResult').innerHTML = resultText;
+
+                        const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF5733', '#8E5EA2', '#3CBA9F', '#FFA726', '#42A5F5', '#66BB6A', '#FF4500'];
+
+                        function createChart(chartType, chartId) {
+                            const ctx = document.getElementById(chartId).getContext('2d');
+                            if (window[chartType]) window[chartType].destroy();
+
+                            window[chartType] = new Chart(ctx, {
+                                type: chartType,
+                                data: {
+                                    labels: chartLabels,
+                                    datasets: [{
+                                        label: 'Expense Breakdown',
+                                        data: chartData,
+                                        backgroundColor: colors,
+                                    }]
+                                },
+                            });
+                        }
+
+                        createChart('doughnut', 'myPieChart');
+                        createChart('bar', 'myBarChart');
+                        createChart('line', 'myLineChart');
+                        createChart('radar', 'myRadarChart');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('predictionResult').innerText = 'Prediction failed.';
+                });
+        });
+    </script>
+</body>
+
+</html>

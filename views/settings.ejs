@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.192);
+            border-radius: 8px;
+            box-shadow: 10px 10px 20px black;
+            backdrop-filter: blur(4px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.19);
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .notification-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .body {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.618), rgba(0, 0, 0, 0.568)), url("./images/pro.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        input,
+        select {
+            background-color: rgba(255, 255, 255, 0.226);
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div class="container">
+        <h1 style="color: white;">Settings</h1>
+
+        <div class="section">
+            <h2 style="color: white;">User Information</h2>
+            <form id="user-info-form" method="post" action="/updateUserInfo">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age">
+                </div>
+
+                <button type="submit">Update Information</button>
+                <% if(typeof errorMessage!=="undefined" ){%>
+                    <p style="color: red;">
+                        <%= errorMessage %>
+                    </p>
+                    <%}%>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2 style="color: white;">Change Password</h2>
+            <form id="change-password-form" method="post" action="/changePassword">
+                <div class="form-group">
+                    <label for="current-password">Current Password</label>
+                    <input type="password" id="current-password" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm New Password</label>
+                    <input type="password" id="confirm-password" name="confirmPassword" required>
+                </div>
+                <button type="submit">Change Password</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2 style="color: white;">Notification Preferences</h2>
+            <form id="notification-preferences-form" method="post" action="/updateNotifications">
+                <div class="notification-group">
+                    <label for="email-notifications" style="color: white;">Email Notifications</label>
+                    <input type="checkbox" id="email-notifications" name="emailNotifications">
+                </div>
+                <div class="notification-group">
+                    <label for="sms-notifications" style="color: white;">SMS Notifications</label>
+                    <input type="checkbox" id="sms-notifications" name="smsNotifications">
+                </div>
+                <button type="submit">Update Preferences</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+
+</script>
+
+</html>

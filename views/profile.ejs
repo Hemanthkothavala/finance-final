@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.192);
+            border-radius: 8px;
+            box-shadow: 10px 10px 20px black;
+            backdrop-filter: blur(4px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .profile-picture {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture img {
+            border-radius: 20px;
+            max-width: 70px;
+            max-height: 70px;
+            border: 4px solid white;
+        }
+
+        .profile-info {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .profile-info div {
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .body {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.618), rgba(0, 0, 0, 0.568)), url("./images/pro.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .upload-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .upload-container input[type="file"] {
+            display: none;
+        }
+
+        .upload-container label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .upload-container label:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div class="container">
+        <h1>User Profile</h1>
+
+        <div class="profile-info">
+            <div><strong>Name:</strong> <span>
+                    <%= username %>
+                </span></div>
+            <div><strong>Email:</strong> <span>
+                    <%= email %>
+                </span></div>
+            <div><strong>Age:</strong> <span>
+                    <%= age %>
+                </span></div>
+        </div>
+
+        <button onclick="window.location.href='/settings'">Edit Profile</button>
+    </div>
+
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const imageUrl = URL.createObjectURL(file);
+                document.getElementById('profile-img').src = imageUrl;
+            }
+        });
+    </script>
+</body>
+
+</html>

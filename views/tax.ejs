@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>business</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-attachment: fixed;
+        }
+
+        .head {
+            background-color: rgb(0, 0, 0);
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .welcome-message {
+            flex: 1;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-right: 30px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 61px;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.37);
+            color: black;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .drawer {
+            width: 250px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.267);
+            color: white;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .drawer.open {
+            transform: translateX(0);
+        }
+
+        .body {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.618), rgba(0, 0, 0, 0.568)), url("./images/income.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .drawer button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .drawer a {
+            text-decoration: none;
+            color: white;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .drawer a:hover {
+            text-decoration: underline;
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgb(0, 0, 0);
+        }
+
+        .main-content.drawer-open {
+            margin-left: 250px;
+        }
+
+        .widget {
+            background-color: rgba(255, 255, 255, 0.37);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            width: 80%;
+            max-width: 800px;
+            backdrop-filter: blur(3px);
+        }
+
+        .widget h2 {
+            margin-top: 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-group label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .result-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+        }
+
+        .result-group span {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .result-group input[type="button"] {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .result-group input[type="button"]:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .customnav {
+            background-color: #ffffff97;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 17px 14px rgba(0, 0, 0, 0.504);
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div class="main-content">
+        <div class="widget">
+            <div class="input-group">
+                <label for="annual-income">Enter your annual income:</label>
+                <input type="number" id="annual-income" placeholder="Annual Income">
+            </div>
+            <div class="result-group">
+                <span>The tax to be paid: ₹<span id="tax">0</span></span>
+                <span>The gross amount: ₹<span id="gross">0</span></span>
+                <input type="button" value="Calculate" onclick="tax()">
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function tax() {
+            const n = document.getElementById("annual-income").value;
+            let a, b;
+            let s = 0, t = 0, u = 0, v = 0, w = 0, x = 0;
+
+            if (n < 375000) {
+                s = 0;
+                b = n - s;
+                document.getElementById("tax").textContent = s;
+                document.getElementById("gross").textContent = b;
+            } else if (n >= 375000 && n < 700000) {
+                a = n - 375000;
+                t = (a * 5) / 100;
+                b = n - t;
+                document.getElementById("tax").textContent = t;
+                document.getElementById("gross").textContent = b;
+            } else if (n >= 700000 && n < 1000000) {
+                a = n - 700000;
+                u = 16250 + (a * 10) / 100;
+                b = n - u;
+                document.getElementById("tax").textContent = u;
+                document.getElementById("gross").textContent = b;
+            } else if (n >= 1000000 && n < 1200000) {
+                a = n - 1000000;
+                v = 16250 + 30000 + (a * 15) / 100;
+                b = n - v;
+                document.getElementById("tax").textContent = v;
+                document.getElementById("gross").textContent = b;
+            } else if (n >= 1200000 && n < 1500000) {
+                a = n - 1200000;
+                w = 16250 + 30000 + 30000 + (a * 20) / 100;
+                b = n - w;
+                document.getElementById("tax").textContent = w;
+                document.getElementById("gross").textContent = b;
+            } else {
+                a = n - 1500000;
+                x = 16250 + 30000 + 30000 + 60000 + (a * 30) / 100;
+                b = n - x;
+                document.getElementById("tax").textContent = x;
+                document.getElementById("gross").textContent = b;
+            }
+        }
+    </script>
+</body>
+
+</html>

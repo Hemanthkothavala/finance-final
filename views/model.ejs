@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker - ML Model Inputs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .prediction-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f4e4;
+            border-left: 6px solid #4CAF50;
+            border-radius: 8px;
+            font-size: 18px;
+            display: none;
+            text-align: center;
+        }
+
+        .prediction-container span {
+            font-weight: bold;
+            color: #2a7a2f;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Finance Tracker - ML Model Inputs</h2>
+        <form id="financeForm" action="/datasubmit" method="POST">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="em">Emergency Fund (Monthly)</label>
+                    <input type="number" id="em" name="em" placeholder="Amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="im">Investments (Monthly)</label>
+                    <input type="number" id="im" name="im" placeholder="Amount" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="edum">Education Funding (Monthly)</label>
+                    <input type="number" id="edum" name="edum" placeholder="Amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="emim">EMI (Monthly)</label>
+                    <input type="number" id="emim" name="emim" placeholder="Amount" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="loanm">Loan (Monthly)</label>
+                    <input type="number" id="loanm" name="loanm" placeholder="Amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="savem">Savings (Monthly)</label>
+                    <input type="number" id="savem" name="savem" placeholder="Amount" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="inm">Insurance (Monthly)</label>
+                    <input type="number" id="inm" name="inm" placeholder="Amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="othm">Others (Monthly)</label>
+                    <input type="number" id="othm" name="othm" placeholder="Amount" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ltgm">Long Term Goal (Monthly)</label>
+                    <input type="number" id="ltgm" name="ltgm" placeholder="Amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="stgm">Short Term Goal (Monthly)</label>
+                    <input type="number" id="stgm" name="stgm" placeholder="Amount" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="taxm">Tax (Monthly)</label>
+                    <input type="number" id="taxm" name="taxm" placeholder="Amount" required>
+                </div>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+
+        <!-- Prediction Display -->
+
+
+        <div class="prediction-container" id="predictionResult">
+            Predicted Value: <span id="predictedValue">--</span>
+        </div>
+    </div>
+    <% if (typeof successMessage !=='undefined' ) { %>
+        <script>
+            alert("<%= successMessage %>");
+        </script>
+        <% } %>
+
+</body>
+
+</html>

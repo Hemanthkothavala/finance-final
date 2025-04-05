@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.192);
+            border-radius: 8px;
+            box-shadow: 10px 10px 20px black;
+            backdrop-filter: blur(4px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.19);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            font-size: 20px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .body {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("./images/1.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        input {
+            background-color: rgba(255, 255, 255, 0.226);
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div class="container">
+        <h1 style="color: white;">Login</h1>
+        <form id="login-form" method="POST" action="/loginsubmit">
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" id="email" name="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p style="color: white;">New User? <a href="registration"
+                style="color: rgb(0, 0, 0); text-decoration: underline;">Register here</a>
+        </p>
+        <p><a href="#" id="reset" style="color: rgb(255, 255, 255);">Forget Password ?</a></p>
+        <% if (typeof errorMessage !=='undefined' ) { %>
+            <p style="color: red;">
+                <%= errorMessage %>
+            </p>
+            <% } %>
+    </div>
+</body>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCukU4-JzS3Naib7OfvXfwhuZDv_QO367o",
+        authDomain: "personal-finance-managem-6160d.firebaseapp.com",
+        projectId: "personal-finance-managem-6160d",
+        storageBucket: "personal-finance-managem-6160d.appspot.com",
+        messagingSenderId: "853863603040",
+        appId: "1:853863603040:web:08e685fb878e5d51e35c05",
+        measurementId: "G-8F3EB4SPW9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("login-form");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const idToken = await userCredential.user.getIdToken();
+
+                // 🔁 Send token to server with hidden form (instead of fetch)
+                const tempForm = document.createElement("form");
+                tempForm.method = "POST";
+                tempForm.action = "/loginsubmit";
+
+                const tokenInput = document.createElement("input");
+                tokenInput.type = "hidden";
+                tokenInput.name = "idToken";
+                tokenInput.value = idToken;
+
+                tempForm.appendChild(tokenInput);
+                document.body.appendChild(tempForm);
+                tempForm.submit();
+
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        const reset = document.getElementById("reset");
+        reset.addEventListener("click", (event) => {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            if (!email) {
+                alert("Please enter your email in the input field first.");
+                return;
+            }
+
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    alert("✅ Password reset email sent! Check your inbox.");
+                })
+                .catch((error) => {
+                    alert("❌ Error: " + error.message);
+                });
+        });
+    });
+
+    // Optional: Prevent back navigation issue
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            window.location.replace('/login');
+        }
+    });
+</script>
+
+
+
+
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <title>Personal Finance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-attachment: fixed;
+<<<<<<< HEAD
+            background-image: linear-gradient(to right, rgba(129, 255, 101, 0.521), rgba(157, 222, 110, 0.674));
+=======
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.311), rgba(0, 0, 0, 0.223)), url("./images/pro1.jpeg");
+>>>>>>> origin/main
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .form-container {
+            background-color: #ffffffb2;
+            padding: 20px;
+            border-radius: 5px;
+<<<<<<< HEAD
+            box-shadow: 0 14px 16px rgba(0, 0, 0, 0.401);
+=======
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+>>>>>>> origin/main
+            backdrop-filter: blur(4px);
+            margin-top: 20px;
+        }
+
+        .char-container {
+<<<<<<< HEAD
+            background-color: #ffffff71;
+=======
+            background-color: #ffffffb2;
+>>>>>>> origin/main
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(4px);
+            margin-top: 20px;
+            display: none;
+            transition: 0.3s ease;
+        }
+
+        .char-container:hover {
+            transform: scale(1.03);
+        }
+
+        .char-container.active {
+            display: block;
+        }
+
+        .char-container1 {
+            background-color: #ffffff00;
+            padding: 20px;
+            border-radius: 5px;
+<<<<<<< HEAD
+            box-shadow: 0  10px rgba(0, 0, 0, 0.353);
+=======
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+>>>>>>> origin/main
+            margin-top: 20px;
+            display: none;
+            transition: 0.3s ease;
+        }
+
+        .char-container1.active {
+            display: block;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+<<<<<<< HEAD
+        .form-group button {
+            background-color: rgb(70, 204, 25);
+        }
+
+=======
+>>>>>>> origin/main
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .radio-buttons {
+            display: flex;
+            justify-content: space-between;
+            max-width: 150px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .chart-container {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+
+            .form-container {
+                max-width: 100%;
+                padding: 10px;
+<<<<<<< HEAD
+                margin-top: 10;    
+=======
+                margin-top: 10;
+>>>>>>> origin/main
+            }
+
+            .chart-container {
+                width: 100%;
+            }
+        }
+
+        .but {
+            animation: pulse 2s infinite;
+            transition: 0.3s ease;
+        }
+
+        .but:hover {
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="form-container">
+                <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Enter details</h1>
+                <form id="financeForm">
+                    <div class="form-group">
+                        <label for="amount" style="font-size: 13px;">Amount:</label>
+                        <input type="number" id="amount" name="amount" required class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="house_rent" style="font-size: 13px;">Enter your house rent (If not enter 0):</label>
+                        <input type="number" id="house_rent" name="house_rent" required class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="education" style="font-size: 13px;">Education Funding:</label>
+                        <div class="radio-buttons">
+                            <input type="radio" id="education_yes" name="education" value="yes" required>
+                            <label for="education_yes" style="font-size: 13px;">Yes</label>
+                            <input type="radio" id="education_no" name="education" value="no" required>
+                            <label for="education_no" style="font-size: 13px;">No</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emi" style="font-size: 13px;">Do you have any EMI:</label>
+                        <div class="radio-buttons">
+                            <input type="radio" id="emi_yes" name="emi" value="yes" required>
+                            <label for="emi_yes" style="font-size: 13px;">Yes</label>
+                            <input type="radio" id="emi_no" name="emi" value="no" required>
+                            <label for="emi_no" style="font-size: 13px;">No</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loans" style="font-size: 13px;">Do you have any Loan:</label>
+                        <div class="radio-buttons">
+                            <input type="radio" id="loans_yes" name="loans" value="yes" required>
+                            <label for="loans_yes" style="font-size: 13px;">Yes</label>
+                            <input type="radio" id="loans_no" name="loans" value="no" required>
+                            <label for="loans_no" style="font-size: 13px;">No</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="investment" style="font-size: 13px;">Do you want to invest:</label>
+                        <div class="radio-buttons">
+                            <input type="radio" id="investment_yes" name="investment" value="yes" required>
+                            <label for="investment_yes" style="font-size: 13px;">Yes</label>
+                            <input type="radio" id="investment_no" name="investment" value="no" required>
+                            <label for="investment_no" style="font-size: 13px;">No</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tax" style="font-size: 13px;">Tax payable:</label>
+                        <div class="radio-buttons">
+                            <input type="radio" id="tax_yes" name="tax" value="yes" required>
+                            <label for="tax_yes" style="font-size: 13px;">Yes</label>
+                            <input type="radio" id="tax_no" name="tax" value="no" required>
+                            <label for="tax_no" style="font-size: 13px;">No</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="but">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="char-container">
+                    <span id="cont"></span>
+                    <canvas id="myPieChart"></canvas>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="char-container">
+                    <span id="radar"></span>
+                    <canvas id="myradarChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="char-container">
+                    <span id="bar"></span>
+                    <canvas id="mybarChart"></canvas>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="char-container">
+                    <span id="line"></span>
+                    <canvas id="mylineChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="char-container1">
+                <table
+                    style="border: 1px solid rgba(0, 0, 0, 0.351); border-radius: 9px; border-collapse: collapse; width: 100%; color: rgb(0, 0, 0);">
+                    <tr>
+                        <th style="border: 3px solid black; background-color: rgba(0, 0, 0, 0.414);">Finance</th>
+                        <th style="border: 3px solid black; background-color: rgba(0, 0, 0, 0.418);">Yearly</th>
+                        <th style="border: 3px solid black; background-color: rgba(0, 0, 0, 0.466);">Monthly</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.275); ">Emergency Fund
+                        </td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.312); " id="ey"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.216); " id="em"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.262); ">Investments
+                        </td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.211); " id="iy"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.232); " id="im"></td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.27); ">Education
+                            Funding</td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.241); " id="eduy"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.234); " id="edum"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.208); ">EMI</td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.223); " id="emiy"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.26); " id="emim"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.27); ">Loan</td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.219); " id="loany">
+                        </td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.273); " id="loanm">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.227); ">Savings</td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.259); " id="savey">
+                        </td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.258); " id="savem">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.204); ">Insurance</td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.258); " id="iny"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.212); " id="inm"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.208); ">Others</td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.212); " id="othy"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.244); " id="othm"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.262); ">Long Term Goal
+                        </td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.195); " id="ltgy"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.221); " id="ltgm"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.238); ">Short Term Goal
+                        </td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.244); " id="stgy"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.215); " id="stgm"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.256); ">Tax</td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.244); " id="taxy"></td>
+                        <td style="border: 3px solid black; background-color: rgba(94, 94, 94, 0.253); " id="taxm"></td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        let myPieChart;
+        let mybarChart;
+        let myradarChart;
+        let mylineChart;
+
+        document.getElementById('financeForm').addEventListener('submit', function (event) {
+
+            event.preventDefault();
+
+            let n = document.getElementById("amount").value;
+            let a, b;
+            let tax1 = 0;
+            console.log(n);
+
+            if (n < 375000) {
+                tax1 = 0;
+                b = n - tax1;
+            } else if (n >= 375000 && n < 700000) {
+                a = n - 375000;
+                tax1 = (a * 5) / 100;
+                b = n - tax1;
+            } else if (n >= 700000 && n < 1000000) {
+                a = n - 700000;
+                tax1 = 16250 + (a * 10) / 100;
+                b = n - tax1;
+            } else if (n >= 1000000 && n < 1200000) {
+                a = n - 1000000;
+                tax1 = 16250 + 30000 + (a * 15) / 100;
+                b = n - tax1;
+            } else if (n >= 1200000 && n < 1500000) {
+                a = n - 1200000;
+                tax1 = 16250 + 30000 + 30000 + (a * 20) / 100;
+                b = n - tax1;
+            } else {
+                a = n - 1500000;
+                tax1 = 16250 + 30000 + 30000 + 60000 + (a * 30) / 100;
+                b = n - tax1;
+            }
+            console.log(tax1);
+
+            const education = document.querySelector('input[name="education"]:checked').value;
+            const emi = document.querySelector('input[name="emi"]:checked').value;
+            const loans = document.querySelector('input[name="loans"]:checked').value;
+            const investment = document.querySelector('input[name="investment"]:checked').value;
+            const tax = document.querySelector('input[name="tax"]:checked').value;
+
+            if (!education || !emi || !loans || !investment || !tax) {
+                alert("Please select an option for all questions.");
+                return;
+            }
+
+            let amount = parseFloat(document.getElementById("amount").value);
+            const house_rent = parseFloat(document.getElementById("house_rent").value);
+
+            if (house_rent != 0) {
+                amount = amount - house_rent - tax1;
+            }
+            else {
+                amount = amount - tax1;
+            }
+
+            let emergency = Math.round(amount * (15 / 100));
+            const insurance = Math.round(amount * (5 / 100));
+            const others = Math.round(amount * (5 / 100));
+            const ltg = Math.round(amount * (10 / 100));
+            const stg = Math.round(amount * (10 / 100));
+            let save = Math.round(amount * (5 / 100));
+
+            let invest = 0, emi1 = 0, edu = 0, loan = 0, taxval = 0;
+            if (investment === "yes") {
+                invest += Math.round(amount * (30 / 100));
+            } else {
+                if (education === "yes") {
+                    save += Math.round(amount * (10 / 100));
+                    edu += Math.round(amount * (10 / 100));
+                    emergency += Math.round(amount * (10 / 100));
+                }
+                else {
+                    save += Math.round(amount * (10 / 100));
+                    emergency += Math.round(amount * (10 / 100));
+                }
+            }
+
+            if (emi === "yes") {
+                emi1 += Math.round(amount * (5 / 100));
+            } else {
+                save += Math.round(amount * (5 / 100));
+            }
+
+            if (loans === "yes") {
+                loan += Math.round(amount * (5 / 100));
+            } else {
+                save += Math.round(amount * (5 / 100));
+            }
+
+            if (education === "yes") {
+                edu += Math.round(amount * (10 / 100));
+            } else {
+                save += Math.round(amount * (10 / 100));
+            }
+            if (tax === "yes") {
+                taxval += tax1
+            }
+            else {
+                save += tax1;
+            }
+
+            if (myPieChart) {
+                myPieChart.destroy();
+            }
+            if (mybarChart) {
+                mybarChart.destroy();
+            }
+            if (mylineChart) {
+                mylineChart.destroy();
+            }
+            if (myradarChart) {
+                myradarChart.destroy();
+            }
+
+            var cont = "Finance Distribution";
+            document.getElementById("cont").textContent = cont;
+            document.getElementById("bar").textContent = cont;
+            document.getElementById("line").textContent = cont;
+            document.getElementById("radar").textContent = cont;
+
+            document.getElementById("ey").textContent = emergency;
+            document.getElementById("iy").textContent = invest;
+            document.getElementById("eduy").textContent = edu;
+            document.getElementById("emiy").textContent = emi1;
+            document.getElementById("loany").textContent = loan;
+            document.getElementById("savey").textContent = save;
+            document.getElementById("iny").textContent = insurance;
+            document.getElementById("othy").textContent = others;
+            document.getElementById("ltgy").textContent = ltg;
+            document.getElementById("stgy").textContent = stg;
+            document.getElementById("taxy").textContent = taxval;
+
+            document.getElementById("em").textContent = Math.round(emergency / 12);
+            document.getElementById("im").textContent = Math.round(invest / 12);
+            document.getElementById("edum").textContent = Math.round(edu / 12);
+            document.getElementById("emim").textContent = Math.round(emi1 / 12);
+            document.getElementById("loanm").textContent = Math.round(loan / 12);
+            document.getElementById("savem").textContent = Math.round(save / 12);
+            document.getElementById("inm").textContent = Math.round(insurance / 12);
+            document.getElementById("othm").textContent = Math.round(others / 12);
+            document.getElementById("ltgm").textContent = Math.round(ltg / 12);
+            document.getElementById("stgm").textContent = Math.round(stg / 12);
+            document.getElementById("taxm").textContent = Math.round(taxval / 12);
+
+            const ctx = document.getElementById('myPieChart').getContext('2d');
+            myPieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Emergency Fund', 'Investments', 'Education Funding', 'EMI', 'Loan', 'Savings', 'Insurance', 'Others', 'LTG', 'STG', 'Tax'],
+                    datasets: [{
+                        label: 'Financial Distribution',
+                        data: [emergency, invest, edu, emi1, loan, save, insurance, others, ltg, stg, taxval],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 206, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 99, 71)',
+                            'rgb(142, 94, 162)',
+                            'rgb(61, 153, 112)',
+                            'rgb(255, 133, 27)',
+                            'rgb(127, 219, 255)',
+                            'rgb(1, 255, 112)',
+                            'rgb(12, 25, 112)'
+                        ],
+                    }]
+                },
+
+            });
+            const ctx1 = document.getElementById('mybarChart').getContext('2d');
+            mybarChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['Emergency Fund', 'Investments', 'Education Funding', 'EMI', 'Loan', 'Savings', 'Insurance', 'Others', 'LTG', 'STG', 'Tax'],
+                    datasets: [{
+                        label: 'Financial Distribution',
+                        data: [emergency, invest, edu, emi1, loan, save, insurance, others, ltg, stg, taxval],
+                        backgroundColor: [
+                            'rgb(242, 121, 131)',
+                            'rgb(74, 152, 215)',
+                            'rgb(235, 186, 116)',
+                            'rgb(115, 212, 202)',
+                            'rgb(255, 139, 91)',
+                            'rgb(182, 124, 202)',
+                            'rgb(91, 183, 152)',
+                            'rgb(205, 153, 57)',
+                            'rgb(137, 209, 245)',
+                            'rgb(61, 255, 142)',
+                            'rgb(12, 25, 112)'
+
+                        ],
+                    }]
+                },
+
+            });
+            const ctx2 = document.getElementById('mylineChart').getContext('2d');
+            mylineChart = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ['Emergency Fund', 'Investments', 'Education Funding', 'EMI', 'Loan', 'Savings', 'Insurance', 'Others', 'LTG', 'STG', 'Tax'],
+                    datasets: [{
+                        label: 'Financial Distribution',
+                        data: [emergency, invest, edu, emi1, loan, save, insurance, others, ltg, stg, taxval],
+                        backgroundColor: [
+                            'rgb(200, 99, 132)',
+                            'rgb(104, 162, 235)',
+                            'rgb(205, 206, 86)',
+                            'rgb(125, 192, 192)',
+                            'rgb(255, 159, 71)',
+                            'rgb(172, 114, 182)',
+                            'rgb(81, 173, 142)',
+                            'rgb(235, 153, 37)',
+                            'rgb(97, 239, 255)',
+                            'rgb(21, 215, 132)',
+                            'rgb(12, 25, 112)'
+
+                        ],
+                    }]
+                },
+
+            });
+
+            const ctx4 = document.getElementById('myradarChart').getContext('2d');
+            myradarChart = new Chart(ctx4, {
+                type: 'radar',
+                data: {
+                    labels: ['Emergency Fund', 'Investments', 'Education Funding', 'EMI', 'Loan', 'Savings', 'Insurance', 'Others', 'LTG', 'STG', 'Tax'],
+                    datasets: [{
+                        label: 'Financial Distribution',
+                        data: [emergency, invest, edu, emi1, loan, save, insurance, others, ltg, stg, taxval],
+                        backgroundColor: [
+                            'rgb(242, 121, 131)',
+                            'rgb(74, 152, 215)',
+                            'rgb(235, 186, 116)',
+                            'rgb(115, 212, 202)',
+                            'rgb(255, 139, 91)',
+                            'rgb(182, 124, 202)',
+                            'rgb(91, 183, 152)',
+                            'rgb(205, 153, 57)',
+                            'rgb(137, 209, 245)',
+                            'rgb(61, 255, 142)',
+                            'rgb(12, 25, 112)'
+
+                        ],
+                    }]
+                },
+
+            });
+            document.querySelectorAll('.char-container').forEach(container => {
+                container.classList.add('active');
+            });
+            document.querySelectorAll('.char-container1').forEach(container => {
+                container.classList.add('active');
+            })
+        });
+
+    </script>
+</body>
+
+</html>
