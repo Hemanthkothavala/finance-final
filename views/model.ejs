@@ -183,6 +183,18 @@
             </div>
 
             <button type="submit">Submit</button>
+            <div>
+                <% if (typeof successMessage !=='undefined' ) { %>
+                    <p style="color: green;">
+                        <%= successMessage %>
+                    </p>
+                    <% } %>
+                        <% if (typeof errorMessage !=='undefined' ) { %>
+                            <p style="color: red;">
+                                <%= errorMessage %>
+                            </p>
+                            <% } %>
+            </div>
         </form>
 
 
@@ -193,11 +205,7 @@
             Predicted Value: <span id="predictedValue">--</span>
         </div>
     </div>
-    <% if (typeof successMessage !=='undefined' ) { %>
-        <script>
-            alert("<%= successMessage %>");
-        </script>
-        <% } %>
+
 
 </body>
 

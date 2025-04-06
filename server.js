@@ -40,12 +40,27 @@ app.use((req, res, next) => {
 });
 
 // ---------- DATA SUBMISSION & MODEL TRAINING ----------
-app.post("/datasubmit", isAuthenticated, (req, res) => {
+app.post("/datasubmit", isAuthenticated, async (req, res) => {
   const userId = req.session.userdata.id;
   const { em, im, edum, emim, loanm, savem, inm, othm, ltgm, stgm, taxm } = req.body;
 
-  db.collection("mldata")
-    .add({
+  try {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    // Get submissions from this user for the current month
+    const snapshot = await db.collection("mldata")
+      .where("userId", "==", userId)
+      .where("timestamp", ">=", startOfMonth)
+      .where("timestamp", "<=", endOfMonth)
+      .get();
+
+    if (!snapshot.empty) {
+      return res.render("model", { errorMessage: "You have already submitted, try submitting next month." });
+    }
+
+    await db.collection("mldata").add({
       userId,
       em: parseFloat(em),
       im: parseFloat(im),
@@ -58,26 +73,27 @@ app.post("/datasubmit", isAuthenticated, (req, res) => {
       ltgm: parseFloat(ltgm),
       stgm: parseFloat(stgm),
       taxm: parseFloat(taxm),
-    })
-    .then(() => {
-      const pythonProcess = spawn('python', ['train_model.py']);
-
-      pythonProcess.stdout.on('data', (data) => {
-        console.log(`Training Output: ${data}`);
-      });
-      pythonProcess.stderr.on('data', (data) => {
-        console.error(`Training Error: ${data}`);
-      });
-      pythonProcess.on('close', (code) => {
-        console.log(`Training process exited with code ${code}`);
-        res.render("model", { successMessage: "Data submitted and Model Trained!" });
-      });
-    })
-    .catch((err) => {
-      console.error("Data submission error:", err);
-      res.status(500).send("Error submitting data");
+      timestamp: new Date()  // Add timestamp
     });
+
+    const pythonProcess = spawn('python', ['train_model.py']);
+    pythonProcess.stdout.on('data', (data) => {
+      console.log(`Training Output: ${data}`);
+    });
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`Training Error: ${data}`);
+    });
+    pythonProcess.on('close', (code) => {
+      console.log(`Training process exited with code ${code}`);
+      res.render("model", { successMessage: "Data submitted successfully" });
+    });
+
+  } catch (err) {
+    console.error("Data submission error:", err);
+    res.status(500).send("Error submitting data");
+  }
 });
+
 
 // ---------- PREDICTION ----------
 app.post("/predictValues", isAuthenticated, async (req, res) => {
