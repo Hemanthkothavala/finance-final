@@ -15,25 +15,74 @@
             background-attachment: fixed;
         }
 
-        .body {
-            background-color: rgb(220, 220, 220);
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
+        .bar {
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.4) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
         }
 
         .card {
+            position: relative;
+            overflow: hidden;
             background-color: rgb(255, 255, 255);
             box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.762);
             backdrop-filter: blur(10px);
             color: white;
-        }
-
-        .card {
             transition: transform 0.3s ease;
             margin-top: 20px;
             margin-right: 40px;
             margin-left: 40px;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.4) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-20deg);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -75%;
+            }
+
+            100% {
+                left: 125%;
+            }
+        }
+
+
+        .body {
+            background-image: linear-gradient(to right, rgb(171, 194, 183), rgb(6, 180, 116));
+            /*background-color: rgba(68, 255, 109, 0.493);*/
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+
+
         }
 
         .card:hover {
@@ -74,6 +123,7 @@
                 transform: translateX(0%);
             }
         }
+
 
         .carousel-inner img {
             max-height: 100vh;
@@ -118,7 +168,9 @@
                 20px;
         }
 
-        .list-group-item li :hover {}
+        .list-group-item a:hover {
+            text-decoration: underline;
+        }
 
         .card h1 {
             color: black;
@@ -130,6 +182,7 @@
             background: rgba(139, 182, 97, 0.8);
             color: white;
             padding: 20px 0;
+            margin-top: 0px;
         }
 
         .footer h5 {
@@ -185,6 +238,21 @@
             color: white;
             font-size: 19px;
         }
+
+        .dropdown-item:hover {
+            background-color: #f8d7da;
+            color: #a71d2a !important;
+        }
+
+        #profileDropdown:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-color: #999;
+        }
+
+        body {
+            margin: 0;
+        }
     </style>
 </head>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -193,8 +261,8 @@
 
 <body class="body">
     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
-        aria-controls="sidebarMenu"
-        style="position: fixed; z-index: 10;background-color: transparent;border: none; font-size: 25px;margin-left: 20px; -webkit-text-stroke: 0.5px black;"><b>☰
+        aria-controls="sidebarMenu" style="position: fixed; z-index: 10;background-color: rgba(255, 255, 255, 0.7);
+border: none; font-size: 25px;margin-left: 20px; -webkit-text-stroke: 0.5px black; color: black;"><b>☰
             Menu</b></button>
     <div class="body-content" id="mainContent">
         <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel"
@@ -229,15 +297,50 @@
                 </div>
             </a>
 
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <form action="/logout" method="POST">
-                        <button type="submit" class="btn btn-danger">Logout</button>
-                    </form>
-                </li>
-            </ul>
+
 
         </div>
+        <div class="position-relative">
+            <!-- Your Carousel -->
+            <div id="carouselExample" class="carousel slide">
+                <!-- Carousel inner content goes here -->
+            </div>
+
+            <!-- Profile Dropdown inside the carousel (overlapping) -->
+            <div class="dropdown d-flex align-items-center gap-2 position-absolute top-0 end-0 p-2 p-sm-3"
+                style="z-index: 1050;">
+                <!-- Welcome Text -->
+                <div class="text-end d-none d-sm-block">
+                    <p class="fw-semibold mb-0 text-white">Welcome, <%= name1 %>
+                    </p>
+                </div>
+
+                <!-- Dropdown Button -->
+                <button class="btn p-0 border-0 dropdown-toggle" type="button" id="profileDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Profile" width="40"
+                        height="40" style="border-radius: 50%; border: 2px solid #ccc;">
+                </button>
+
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="profileDropdown">
+                    <li>
+                        <form action="/logout" method="POST">
+                            <button type="submit" class="dropdown-item text-danger fw-semibold py-2">
+                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
+
+
 
 
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel"
@@ -245,13 +348,13 @@
 
             <div class="carousel-inner">
                 <div class="carousel-item active" data-bs-interval="4000">
-                    <img src="./images/1.png" class="d-block w-100" alt="...">
+                    <img src="./images/1.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item" data-bs-interval="4000">
-                    <img src="./images/2.png" class="d-block w-100" alt="...">
+                    <img src="./images/2.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item" data-bs-interval="4000">
-                    <img src="./images/3.png" class="d-block w-100" alt="...">
+                    <img src="./images/3.jpg" class="d-block w-100" alt="...">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
@@ -265,103 +368,112 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        <h1
-            style="text-align: center; padding-top: 10px; background-color: rgb(150, 150, 150); color: white; margin-top: 10px; padding-bottom: 10px; font-family: 'Times New Roman', Times, serif;">
-            Finances</h1>
-        <div class="container mt-5 text-center">
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="card">
-                        <a href="/finance"><img src="./images/4.png" class="card-img-top img-fluid" alt="Card 1"></a>
-                        <h1>Expense Tracker</h1>
+        <div class="checkerboard" id="checkerboard">
+            <h1 class="bar"
+                style="text-align: center; padding-top: 10px; background-color: rgba(43, 240, 152, 0.715); color: rgb(0, 0, 0); padding-bottom: 10px; font-family: 'Times New Roman', Times, serif;">
+                Finances</h1>
+            <div class="checkered-background">
+
+                <div class="container mt-5 text-center">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-12">
+                            <div class="card">
+                                <a href="/finance"><img src="./images/4.jpg" class="card-img-top img-fluid"
+                                        alt="Card 1"></a>
+                                <h1>Expense Tracker</h1>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-12">
+                            <div class="card">
+                                <a href="/tax"><img src="./images/5.jpg" class="card-img-top img-fluid"
+                                        alt="Card 2"></a>
+                                <h1>Tax Calculator</h1>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="container mt-5 text-center">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-12">
+                            <div class="card">
+                                <a href="/predict"><img src="./images/6.jpg" class="card-img-top img-fluid"
+                                        alt="Card 1"></a>
+                                <h1>Next month Expenses</h1>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-12">
+                            <div class="card">
+                                <a href="/mlsub"><img src="./images/7.jpg" class="card-img-top img-fluid"
+                                        alt="Card 3"></a>
+                                <h1>Monthly spendings</h1>
+                            </div>
+                        </div>
 
 
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="card">
-                        <a href="/tax"><img src="./images/5.png" class="card-img-top img-fluid" alt="Card 2"></a>
-                        <h1>Tax Calculator</h1>
+
+                <div class="modal fade" id="cal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="calendarModalLabel">Calendar</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe
+                                    src="https://calendar.google.com/calendar/embed?src=en.indian%23holiday%40group.v.calendar.google.com&ctz=UTC"
+                                    style="border: 0" width="100%" height="600" frameborder="0" scrolling="no">
+                                </iframe>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-            </div>
-        </div>
-        <div class="container mt-5 text-center">
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="card">
-                        <a href="/predict"><img src="./images/6.png" class="card-img-top img-fluid" alt="Card 1"></a>
-                        <h1>Next month Expenses</h1>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="card">
-                        <a href="/mlsub"><img src="./images/7.png" class="card-img-top img-fluid" alt="Card 3"></a>
-                        <h1>Monthly spendings</h1>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-
-        <div class="modal fade" id="cal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="calendarModalLabel">Calendar</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <iframe
-                            src="https://calendar.google.com/calendar/embed?src=en.indian%23holiday%40group.v.calendar.google.com&ctz=UTC"
-                            style="border: 0" width="100%" height="600" frameborder="0" scrolling="no">
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-
-        <script>
-
-            window.addEventListener('pageshow', (event) => {
-                if (event.persisted) {
-                    window.location.replace('/home');
-                }
-            });
-
-
-
-        </script>
-
-    </div>
-    <footer class="footer mt-5 py-3 bg-dark text-light">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Contact Us</h5>
-                    <p>Email: support@profitguard.com</p>
-                    <p>Phone: +91 98765 43210</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Follow Us</h5>
-                    <a href="https://facebook.com" class="text-light me-3">Facebook</a>
-                    <a href="https://twitter.com" class="text-light me-3">Twitter</a>
-                    <a href="https://linkedin.com" class="text-light">LinkedIn</a>
-                </div>
-                <div class="col-md-4">
-                    <h5>Address</h5>
-                    <p>123 Business Street, Hyderabad, India</p>
                 </div>
             </div>
-            <hr class="bg-light">
-            <p class="mb-0">&copy; 2025 ProfitGuard. All rights reserved.</p>
+
+
+
+            <script>
+
+                window.addEventListener('pageshow', (event) => {
+                    if (event.persisted) {
+                        window.location.replace('/home');
+                    }
+                });
+
+
+            </script>
+
+
+            <footer class="footer mt-5 py-3 bg-dark text-light">
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Contact Us</h5>
+                            <p>Email: support@profitguard.com</p>
+                            <p>Phone: +91 98765 43210</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Follow Us</h5>
+                            <a href="https://facebook.com" class="text-light me-3">Facebook</a>
+                            <a href="https://twitter.com" class="text-light me-3">Twitter</a>
+                            <a href="https://linkedin.com" class="text-light">LinkedIn</a>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Address</h5>
+                            <p>123 Business Street, Hyderabad, India</p>
+                        </div>
+                    </div>
+                    <hr class="bg-light">
+                    <p class="mb-0">&copy; 2025 ProfitGuard. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
-    </footer>
 </body>
 
 </html>
